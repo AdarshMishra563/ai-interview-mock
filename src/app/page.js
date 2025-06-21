@@ -1,14 +1,26 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useRouter } from 'next/navigation'
+import { useSelector } from 'react-redux';
 
-function page() {
+function Page() {
   const navigation=useRouter();
-  
+
+ const {token,user}=useSelector((state)=>state.user.user);
+
+
+ useEffect(()=>{
+
+  if(token){
+    navigation.push("interview")
+  }else{
+    navigation.push("login")
+  }
+ },[token])
   return (
-    <div  onClick={()=>{navigation.push("login")}}>Interview</div>
+    <div  >Interview Loading.....</div>
   )
 }
 
-export default page
+export default Page
