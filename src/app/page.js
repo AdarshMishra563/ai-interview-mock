@@ -1,4 +1,5 @@
 'use client'
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react'
 
@@ -9,7 +10,15 @@ function Page() {
   const navigation=useRouter()
 
  const k=useSelector((state)=>state?.user?.user);
+useEffect(()=>{
+const fetch=async ()=>{
 
+  const data=axios.get("https://ai-interview-nodebackend.onrender.com");
+  console.log(data)
+}
+fetch();
+
+},[])
 
  useEffect(()=>{
 
