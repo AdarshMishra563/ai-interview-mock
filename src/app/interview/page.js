@@ -25,6 +25,7 @@ const [loading,setLoading]=useState(true);
   const recognitionTranscript = useRef('');
 const lastSentMessage = useRef('');
 const router=useRouter();
+console.log(useSelector(state=>state.user.user || {}))
 const dispatch=useDispatch();
   useEffect(() => {
      window.speechSynthesis.cancel();

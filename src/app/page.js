@@ -8,17 +8,7 @@ import { useSelector } from 'react-redux';
 function Page() {
   const navigation=useRouter()
 
- const {token,user}=useSelector((state)=>state.user.user);
-
-
- useEffect(()=>{
-
-  if(token && user){
-    navigation.push("/interview")
-  }else{
-    navigation.push("/login")
-  }
- },[token])
+ 
   return (
     <div  >Interview Loading.....</div>
   )
