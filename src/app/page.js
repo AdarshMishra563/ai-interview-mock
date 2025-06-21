@@ -13,7 +13,7 @@ function Page() {
 
  useEffect(()=>{
 
-  if(token){
+  if(token && user){
     navigation.push("interview")
   }else{
     navigation.push("login")
