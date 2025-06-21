@@ -22,6 +22,7 @@ const [level, setLevel] = useState('Medium');
 const [loading,setLoading]=useState(true);
   const recognitionTranscript = useRef('');
 const lastSentMessage = useRef('');
+const router=useRouter();
   useEffect(() => {
      window.speechSynthesis.cancel();
       if (!token) {
@@ -209,7 +210,7 @@ useEffect(() => {
   return () => {
     document.removeEventListener("visibilitychange", handleVisibilityChange);
   };
-}, []);
+}, [token]);
 useEffect(() => {
   return () => {
    
