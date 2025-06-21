@@ -3,8 +3,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { io } from 'socket.io-client';
 import { Editor } from '@monaco-editor/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { logout } from '../store/userSlice';
 const ChatComponent = () => {
   const socket = useRef(null);
   const [aiMessage, setAiMessage] = useState('');
@@ -23,6 +24,7 @@ const [loading,setLoading]=useState(true);
   const recognitionTranscript = useRef('');
 const lastSentMessage = useRef('');
 const router=useRouter();
+const dispatch=useDispatch();
   useEffect(() => {
      window.speechSynthesis.cancel();
       if (!token) {
@@ -266,8 +268,25 @@ if(loading){
           ) : (
             <div className="w-full max-w-md bg-gray-800/80 backdrop-blur-sm rounded-xl p-8 shadow-2xl border border-gray-700">
               <h2 className="text-3xl font-bold text-center mb-6 text-blue-400">
-                Welcome, {user?.name}
-              </h2>
+                Welcome, {user?.name} 
+              </h2> <div style={{
+  width: "100%",
+  display: "flex",
+  justifyContent: "flex-end",
+ 
+}}>
+  <button
+    style={{
+      color: "red",
+      fontSize: 18,
+      textDecoration: "underline"
+    }}
+    onClick={() => dispatch(logout())}
+  >
+    Logout
+  </button>
+</div>
+
 
               <div className="space-y-6">
                 <div>
