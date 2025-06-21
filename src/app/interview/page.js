@@ -127,9 +127,7 @@ const dispatch=useDispatch();
   };
 
   const sendMessage = (text) => {
-    if(text.trim().toLowerCase()===lastSentMessage.current.trim().toLowerCase()){
-      return 
-    }
+   
     console.log(text,"sent messageee");
 
     if (socket.current && text.trim()) {
