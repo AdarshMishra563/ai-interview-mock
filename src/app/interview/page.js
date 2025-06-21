@@ -78,7 +78,7 @@ const dispatch=useDispatch();
     const recognition = new SpeechRecognition();
     recognition.lang = 'en-US';
     recognition.interimResults = false;
-    recognition.continuous = false;
+    recognition.continuous = true;
 
     recognition.onstart = () => {
       console.log(' Voice recognition started');
@@ -94,12 +94,11 @@ const dispatch=useDispatch();
   const normalizedLastMessage = lastSentMessage.current.trim().toLowerCase();
   
   
-  if ( normalizedTranscript !== normalizedLastMessage) {
+  
     sendMessage(transcript);
     lastSentMessage.current = transcript;
-  } else {
-    console.log("Same input detected - ignoring");
-  }
+  
+    
 
     
    
@@ -110,7 +109,7 @@ const dispatch=useDispatch();
     recognition.onerror = () => stopListening();
     recognition.onend = () => {
       console.log(' Voice recognition ended');
-      setTimeout(()=>{ startListening()},1000)
+      setTimeout(()=>{ startListening()},500)
      
    
     };
