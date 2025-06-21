@@ -110,7 +110,7 @@ const dispatch=useDispatch();
     recognition.onerror = () => stopListening();
     recognition.onend = () => {
       console.log(' Voice recognition ended');
-      
+      setTimeout(()=>{ startListening()},1500)
      
    
     };
