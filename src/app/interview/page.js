@@ -78,7 +78,7 @@ const dispatch=useDispatch();
     const recognition = new SpeechRecognition();
     recognition.lang = 'en-US';
     recognition.interimResults = false;
-    recognition.continuous = true;
+    recognition.continuous = false;
 
     recognition.onstart = () => {
       console.log(' Voice recognition started');
@@ -109,7 +109,7 @@ const dispatch=useDispatch();
     recognition.onerror = () => stopListening();
     recognition.onend = () => {
       console.log(' Voice recognition ended');
-      setTimeout(()=>{ startListening()},500)
+      setTimeout(()=>{ startListening()},1000)
      
    
     };
