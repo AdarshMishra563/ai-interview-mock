@@ -14,9 +14,9 @@ function Page() {
  useEffect(()=>{
 
   if(token && user){
-    navigation.push("interview")
+    navigation.push("/interview")
   }else{
-    navigation.push("login")
+    navigation.push("/login")
   }
  },[token])
   return (
