@@ -25,7 +25,7 @@ const [loading,setLoading]=useState(true);
   const recognitionTranscript = useRef('');
 const lastSentMessage = useRef('');
 const router=useRouter();
-console.log(useSelector(state=>state.user.user || {}))
+
 const dispatch=useDispatch();
   useEffect(() => {
      window.speechSynthesis.cancel();
@@ -34,7 +34,7 @@ const dispatch=useDispatch();
       return;
     }
     if (token) {
-      console.log(token)
+      
       const newSocket = io('https://ai-interview-nodebackend.onrender.com', {
         auth: { token },
       });
@@ -46,12 +46,13 @@ const dispatch=useDispatch();
       });
 
       newSocket.on('ai_reply', (data) => {
-        console.log('AI replied:', data.response);
+       
         
         const cleanedResponse = data.response.replace(/\([^)]*\)/g, '').trim();
         console.log(cleanedResponse)
         setAiMessage(cleanedResponse);
-        speakText(cleanedResponse);
+        window.speechSynthesis.cancel(); 
+        setTimeout(()=>{speakText(cleanedResponse)},500)
       });
 
       newSocket.on('disconnect', () => {
@@ -65,20 +66,20 @@ const dispatch=useDispatch();
     }
   }, [token]);
 
-  const startListening = () => {
+ const startListening = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     if (!SpeechRecognition) {
       alert('Speech recognition not supported.');
       return;
     }
  if (recognitionRef.current) {
-      recognitionRef.current.stop();
-      recognitionRef.current = null;
-    }
+    recognitionRef.current.stop();
+    recognitionRef.current = null;
+  }
     const recognition = new SpeechRecognition();
     recognition.lang = 'en-US';
     recognition.interimResults = false;
-    recognition.continuous = false;
+    recognition.continuous = true;
 
     recognition.onstart = () => {
       console.log(' Voice recognition started');
@@ -87,30 +88,25 @@ const dispatch=useDispatch();
     };
 
   recognition.onresult = (event) => {
-    console.log(event,"dhdhhdhdhhdhdhdhh")
   const transcript = event.results[event.results.length - 1][0].transcript;
   console.log('You said:', transcript);
-   const normalizedTranscript = transcript.trim().toLowerCase();
-  const normalizedLastMessage = lastSentMessage.current.trim().toLowerCase();
-  
-  
-  
-    sendMessage(transcript);
-    lastSentMessage.current = transcript;
-  
-    
-
-    
-   
-   
-  
+  if (transcript.trim()) {
+    sendMessage(transcript.trim());
+  }
 };
-
-    recognition.onerror = () => stopListening();
+  recognition.onerror = (event) => {
+    console.error('Recognition error:', event.error);
+    setIsListening(false);
+    
+   
+    if (event.error !== 'no-speech' && event.error !== 'aborted') {
+      setTimeout(startListening, 1000);
+    }
+  };
+    
     recognition.onend = () => {
       console.log(' Voice recognition ended');
-      setTimeout(()=>{ startListening()},1000)
-     
+      setTimeout(()=>{startListening()},1000)
    
     };
 
@@ -136,8 +132,8 @@ const dispatch=useDispatch();
   };
 
   const speakText = (text) => {
-   console.log("got text",text)
-      window.speechSynthesis.cancel();
+   
+      
 
        if (text.trim() && !isSpeaking.current) {
       const utterance = new SpeechSynthesisUtterance(text);
@@ -179,15 +175,7 @@ useEffect(() => {
 }, []);
 useEffect(() => {
 
-  const endInterview = () => {
-    hasInterviewStarted.current = false;
-    setStart(false);
-    stopListening();
-    window.speechSynthesis.cancel();
-    if (socket.current) {
-        socket.current.emit('end_interview', { token });
-    }
-};
+ 
   const handleVisibilityChange = () => {
     if (document.hidden) {
       
@@ -200,7 +188,7 @@ useEffect(() => {
       }
       hasInterviewStarted.current = false;
       setStart(false);
-      endInterview()
+      
       window.location.reload();
 
     }
