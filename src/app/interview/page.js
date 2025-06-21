@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { logout } from '../store/userSlice';
 const ChatComponent = () => {
+  const {token,user}=useSelector(state=>state.user.user || {});
   const socket = useRef(null);
   const [aiMessage, setAiMessage] = useState('');
   const [isListening, setIsListening] = useState(false);
@@ -16,7 +17,7 @@ const ChatComponent = () => {
   const recognitionRef = useRef(null);
   const hasInterviewStarted = useRef(false);
   const isSpeaking = useRef(false);
-  const {token,user}=useSelector((state)=>state.user.user);
+
   const [topic, setTopic] = useState('');
 const [interviewType, setInterviewType] = useState('with code');
 const [level, setLevel] = useState('Medium');
