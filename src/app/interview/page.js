@@ -96,12 +96,7 @@ const dispatch=useDispatch();
 };
   recognition.onerror = (event) => {
     console.error('Recognition error:', event.error);
-    setIsListening(false);
     
-   
-    if (event.error !== 'no-speech' && event.error !== 'aborted') {
-      setTimeout(startListening, 1000);
-    }
   };
     
     recognition.onend = () => {
