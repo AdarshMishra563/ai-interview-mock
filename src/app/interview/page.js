@@ -72,6 +72,8 @@ const dispatch=useDispatch();
       alert('Speech recognition not supported.');
       return;
     }
+
+    
  if (recognitionRef.current) {
     recognitionRef.current.stop();
     recognitionRef.current = null;
