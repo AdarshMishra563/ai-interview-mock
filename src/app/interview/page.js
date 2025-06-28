@@ -17,6 +17,7 @@ const ChatComponent = () => {
   const recognitionRef = useRef(null);
   const hasInterviewStarted = useRef(false);
   const isSpeaking = useRef(false);
+const shouldBeListening = useRef(false);
 
   const [topic, setTopic] = useState('');
 const [interviewType, setInterviewType] = useState('with code');
@@ -87,6 +88,7 @@ const dispatch=useDispatch();
       console.log(' Voice recognition started');
       setIsListening(true);
       recognitionTranscript.current = '';
+      shouldBeListening.current = true;
     };
 
   recognition.onresult = (event) => {
@@ -103,7 +105,11 @@ const dispatch=useDispatch();
     
     recognition.onend = () => {
       console.log(' Voice recognition ended');
-      setTimeout(()=>{startListening()},1000)
+      if (shouldBeListening.current) {
+      setTimeout(() => {
+        startListening();
+      }, 1000);
+    }
    
     };
 
@@ -112,6 +118,7 @@ const dispatch=useDispatch();
   };
 
   const stopListening = () => {
+    shouldBeListening.current = false;
     if (recognitionRef.current) {
       recognitionRef.current.stop();
       recognitionRef.current = null;
