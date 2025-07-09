@@ -13,23 +13,20 @@ function Page() {
 useEffect(()=>{
 const fetch=async ()=>{
 
-  const data=axios.get("https://ai-interview-nodebackend.onrender.com");
-  console.log(data)
-}
-fetch();
-
-},[])
-
- useEffect(()=>{
-
-  if(k?.token && k?.user){
+  const data=await axios.get("https://ai-interview-nodebackend.onrender.com");
+   if(k?.token && k?.user){
     navigation.push("/interview")
   }else{
     navigation.push("/login")
   }
- },[k?.token])
+}
+fetch();
+
+},[k?.token])
+
+ 
   return (
-    <div  >Interview Loading.....</div>
+    <div  >Interview Server Loading.....</div>
   )
 }
 
