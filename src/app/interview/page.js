@@ -35,11 +35,14 @@ const dispatch=useDispatch();
       return;
     }
     if (token) {
-      
-      const newSocket = io('https://ai-interview-nodebackend.onrender.com', {
-        auth: { token },
-      });
-
+     const newSocket = io("https://ai-interview-nodebackend.onrender.com", {
+  transports: ["websocket"],  
+  auth: { token },
+  reconnection: true,                     
+  reconnectionAttempts: 5,               
+  reconnectionDelay: 5000,                
+  reconnectionDelayMax: 20000,          
+});
       newSocket.on('connect', () => {
         console.log(' Connected:', newSocket.id);
         socket.current = newSocket;
