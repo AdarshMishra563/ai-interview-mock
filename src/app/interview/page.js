@@ -35,7 +35,7 @@ const dispatch=useDispatch();
       return;
     }
     if (token) {
-     const newSocket = io("https://ai-interview-nodebackend.onrender.com", {
+     const newSocket = io("https://ai-interview-nodebackend-5op0.onrender.com", {
    
   auth: { token:token },
    transports: ["websocket"],

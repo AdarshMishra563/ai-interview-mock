@@ -13,7 +13,7 @@ function Page() {
 useEffect(()=>{
 const fetch=async ()=>{
 
-  const data=await axios.get("https://ai-interview-nodebackend.onrender.com");
+  
    if(k?.token && k?.user){
     navigation.push("/interview")
   }else{
